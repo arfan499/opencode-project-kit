@@ -16,7 +16,8 @@ READ-ONLY audit. Change nothing unless the user asks after seeing the report.
    - `plugin.use` absolute path -> that directory / package must exist on disk
    - `plugin.use` npm name -> must appear, unversioned, in the global plugin list
      (`@latest` / `@x.y.z` stripped)
-   - `mcp.use` -> name must exist under `mcp` in the global config
+   - `mcp.use` -> name must exist under `mcp` in the global config, OR be defined in this
+     project's own `mcp` block (project-local servers such as `kitesurf` are legitimate)
    - `skill.use` -> directory must exist under `~/.config/opencode/skills/`
    Anything unmatched is a DEAD ALLOW: the capability is denied with no error anywhere. Report as
    "typo suspect" with the closest real name if there is one.

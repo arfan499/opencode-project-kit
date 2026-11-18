@@ -30,6 +30,12 @@ project cannot lift a global deny, so removal is always done project-locally.
      `allow` comes AFTER it (within a file, last match wins). Do not reorder other categories.
    - Never delete the whole `policies` array; never add a global deny.
    - Preserve unrelated settings byte-for-byte.
+   - If the removed MCP server is DEFINED in this project's own `mcp` block (a project-local
+     server such as `kitesurf`, not a global one), delete that definition too — otherwise it
+     keeps loading and keeps costing tokens with no `allow` behind it. Also remove its companion
+     instructions path from `instructions` (kitesurf ->
+     `C:\Users\Arfan Mahmood\.config\opencode\kitesurf.md`). Drop the whole `mcp` / `instructions`
+     key if it becomes empty.
 4. If the project `AGENTS.md` lists the capability under "Enabled capabilities", move it to the
    "Disabled by default (run `/project-add <name>` to enable)" list.
 5. Keep `.opencode/AVAILABLE.md` in sync: flip that capability's line to `[off]` (it stays listed —

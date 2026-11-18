@@ -26,7 +26,10 @@ STEP 1 — DISCOVER (read-only; reused by STEP 4)
   - absolute-path plugins -> use the path exactly as written (normalize `\` to `/`)
   - npm plugins -> the **unversioned** name (strip `@latest`/`@x.y.z`), e.g.
     `opencode-mem`, `@tarquinen/opencode-dcp`, `opencode-swarm`, `opencode-parser`
-- Collect MCP server names (e.g. `rea`, `kitesurf`) from `mcp` in either file.
+- Collect MCP server names (e.g. `rea`) from `mcp` in either file.
+- Add the PROJECT-LOCAL MCP registry too (servers deliberately not global — currently
+  `kitesurf`, definition in `project-add.md` step 3b): still offered in the interview, but
+  written into the project config as a definition, not just an allow.
 - Collect skill IDs = directory names under `~/.config/opencode/skills/`. Note: skills bundled
   by plugins are controlled by their plugin, not listed here.
 - Presets are defined inline in the PERSISTENT PRESETS table at the bottom of this file; they
@@ -53,8 +56,8 @@ CALL C — "Enable capabilities" (THREE questions in one call, each `multiple: t
   in the question text as "(opencode-mem, opencode-swarm and the context-compression plugin
   @tarquinen/opencode-dcp stay on in every project)".
   1. header "MCP servers"
-     options = every discovered MCP server (e.g. rea, kitesurf), each with a one-line
-     description of what it provides.
+     options = every discovered global MCP server (e.g. rea) plus the project-local registry
+     entries (e.g. kitesurf), each with a one-line description of what it provides.
   2. header "Skills"
      options = every skill ID under `~/.config/opencode/skills/`. If a family exceeds ~8
      entries, add one grouped option "<family>-* (all)" (e.g. "gstack-* (all)") plus the
@@ -87,12 +90,21 @@ Use the `write` tool. Shape (omit a category's `deny *` when the user chose "all
     /* one allow per chosen skill id */
   ],
   "instructions": [".opencode/PROGRESS.md"],
+  "mcp": {
+    /* ONLY servers that are not declared globally (e.g. kitesurf) */
+  },
   "model": "<chosen, else omit>"
 }
 
 Hard rules:
 - The ALWAYS-ON allows (`opencode-mem`, `opencode-swarm`, `@tarquinen/opencode-dcp`) are written
   FIRST, before any optional plugin allow, and are never conditioned on the interview.
+- A chosen MCP server that is NOT in the global `mcp` block must be DEFINED here (`type`,
+  `command`, `timeout`, `enabled`) using the registry in `project-add.md` step 3b, because a
+  policy `allow` cannot conjure a server that no config declares. If it has a companion
+  instructions file (kitesurf -> `C:\Users\Arfan Mahmood\.config\opencode\kitesurf.md`), add
+  that path to `instructions` so only projects that use it pay for it.
+- Omit the whole `mcp` key when no project-local server was chosen.
 - Final optional set = union of the chosen preset entries + the interview selections
   (de-duplicated) before writing any `allow`.
 - Each `deny *` MUST precede its `allow` lines (within a file, last match wins).
@@ -114,8 +126,8 @@ To enable one: `/project-add <name>`. To disable: `/project-remove <name>`.
 Always on, never removed: `opencode-mem`, `opencode-swarm`, `@tarquinen/opencode-dcp`.
 
 ## MCP servers
-- [on]  kitesurf — browser automation
-- [off] rea — reverse engineering
+- [on]  kitesurf — browser automation (project-local: definition lives in this project's `mcp`)
+- [off] rea — reverse engineering (global)
 
 ## Plugins
 - [on]  opencode-mem — cross-session memory (ALWAYS ON)

@@ -16,7 +16,11 @@ reconciles ONE project with it. Read-only until the user picks.
    - NEW  = available globally, NOT enabled here, and NOT already present as an allow
    - DEAD = enabled here but no longer exists globally (plugin deleted, skill removed, server
             renamed) — see the RESOURCE EXISTENCE rules in
-            `~/.config/opencode/commands/project-doctor.md` STEP 4
+            `~/.config/opencode/commands/project-doctor.md` STEP 4.
+            EXCEPTION: an MCP server DEFINED in this project's own `mcp` block (project-local
+            servers such as `kitesurf`) is alive by definition — never report it as DEAD just
+            because it is absent from the global config. Report it as a separate line
+            "project-local MCP: <name>".
 3. If NEW is non-empty: ONE `question` call, `multiple: true`, grouped by category, each option
    carrying a one-line cost note (what it adds / what it costs in context). Pre-select NOTHING.
    Apply the picked ones exactly as `/project-add` does: allow AFTER the category's `deny *`,

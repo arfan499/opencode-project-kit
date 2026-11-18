@@ -134,7 +134,7 @@ degrading quietly.
 
 | Preset | Picks |
 | --- | --- |
-| `web` | MCP `kitesurf`; gstack browse/qa/qa-only/review/verify/ship/design-review/design-html/benchmark/health; karpathy-guidelines |
+| `web` | MCP `kitesurf` (defined project-locally — no global server); gstack browse/qa/qa-only/review/verify/ship/design-review/design-html/benchmark/health; karpathy-guidelines |
 | `python` | karpathy-guidelines |
 | `embedded` | plugins `oh-my-embedded-v2`, `opencode-embedded-plugin` |
 | `ios` | gstack ios-qa/ios-fix/ios-design-review/ios-sync/ios-clean |
