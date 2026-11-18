@@ -36,6 +36,9 @@ project cannot lift a global deny, so removal is always done project-locally.
      instructions path from `instructions` (kitesurf ->
      `C:\Users\Arfan Mahmood\.config\opencode\kitesurf.md`). Drop the whole `mcp` / `instructions`
      key if it becomes empty.
+   - If the removed skill was added through the project's `skills` array (a skill-pack path),
+     delete that exact path from the array and drop the `skills` key when it becomes empty -
+     an orphaned path keeps loading the skill and keeps costing tokens.
 4. If the project `AGENTS.md` lists the capability under "Enabled capabilities", move it to the
    "Disabled by default (run `/project-add <name>` to enable)" list.
 5. Keep `.opencode/AVAILABLE.md` in sync: flip that capability's line to `[off]` (it stays listed —

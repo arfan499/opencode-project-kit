@@ -19,6 +19,12 @@ run this, and continue. Never silently work around a missing capability.
    - plugin resource: absolute path as written (forward slashes) or unversioned npm name
    - mcp resource: server name
    - skill resource: skill id
+   - skill resource that lives in `~/.config/opencode/skill-packs/`: it is NOT auto-visible,
+     so an allow alone does nothing. Also append its absolute directory to the project
+     config's `skills` array:
+     `"skills": ["C:/Users/Arfan Mahmood/.config/opencode/skill-packs/<name>"]`
+     (create the key if absent; one path per skill, never a parent folder).
+     Core skills under `skills/` are already visible everywhere - allow only, no path.
 3b. MCP SERVERS ARE DORMANT UNTIL NEEDED. Every server is defined in the global config with
    `"enabled": false`, so it is known and lists at zero token cost; an enabled one injects its
    whole tool schema into every request.

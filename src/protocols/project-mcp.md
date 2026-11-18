@@ -14,7 +14,6 @@ Every **enabled** MCP server injects the full schema of every tool it exposes in
 | server | tools | cost while enabled |
 |---|---|---|
 | `rea` | ~255 | very heavy — easily 10k+ tokens per request |
-| `kitesurf` | ~35 | heavy — several thousand tokens per request |
 
 So the servers are **installed and dormant**: every definition exists in the global
 config with `"enabled": false`, which means it is known, listed, and costs **zero tokens**
@@ -63,7 +62,7 @@ Then one line: `Activate with /project-mcp on <name>; deactivate with /project-m
 
 4. Add `{ "action": "mcp.use", "resource": "<name>", "effect": "allow" }` **after** the
    `mcp.use deny *` statement (order matters — deny first, allow after).
-5. If the registry entry has a companion `instructions` path (kitesurf), add it to the
+5. If the registry entry has a companion `instructions` path, add it to the
    project's `instructions` array while active and say it costs tokens too.
 6. Announce one line: `Activated <name> here (~<cost> per request). Say "done" and I turn it off.`
    Config hot-reloads on save; a freshly started MCP may need `/reload` or a new session
@@ -113,27 +112,6 @@ when activating per project; keep the global copies in sync if a command changes
   "enabled": true
 }
 ```
-
-### `kitesurf` — Cloudflare agent browser (CDP page control). ~35 tools. HEAVY.
-
-```jsonc
-"kitesurf": {
-  "type": "local",
-  "command": [
-    "C:\\Program Files\\nodejs\\node.exe",
-    "C:\\Users\\Arfan Mahmood\\AppData\\Roaming\\npm\\node_modules\\chrome-devtools-mcp\\out\\Default\\gen\\src\\bin\\chrome-devtools-mcp.js",
-    "--wsEndpoint=wss://kitesurf.dev/devtools/browser",
-    "--category-experimental-webmcp",
-    "--no-page-id-routing",
-    "--workspace=/",
-    "--no-usage-statistics"
-  ],
-  "timeout": 60000,
-  "enabled": true
-}
-```
-
-Companion instructions: `C:\Users\Arfan Mahmood\.config\opencode\kitesurf.md`
 
 ### Adding a new server — MANDATORY for every future MCP
 

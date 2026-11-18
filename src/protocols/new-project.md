@@ -30,8 +30,11 @@ STEP 1 — DISCOVER (read-only; reused by STEP 4)
 - Add the PROJECT-LOCAL MCP registry too (servers deliberately not global — currently
   `kitesurf`, definition in `project-add.md` step 3b): still offered in the interview, but
   written into the project config as a definition, not just an allow.
-- Collect skill IDs = directory names under `~/.config/opencode/skills/`. Note: skills bundled
-  by plugins are controlled by their plugin, not listed here.
+- Collect skill IDs from TWO places:
+  - `~/.config/opencode/skills/` — core skills, auto-visible in EVERY project (small set).
+  - `~/.config/opencode/skill-packs/` — pack skills, NOT auto-visible anywhere; they cost zero
+    tokens until a project asks for them. This is where the bulk lives (62 gstack-*, etc.).
+  Note: skills bundled by plugins are controlled by their plugin, not listed here.
 - Presets are defined inline in the PERSISTENT PRESETS table at the bottom of this file; they
   drive CALL B. ALWAYS-ON items are defined in the ALWAYS-ON table and are not offered.
 
@@ -63,9 +66,12 @@ CALL C — "Enable capabilities" (THREE questions in one call, each `multiple: t
      is activated per task, not kept on for the project's lifetime. Say this in the question
      text and pre-select nothing.
   2. header "Skills"
-     options = every skill ID under `~/.config/opencode/skills/`. If a family exceeds ~8
-     entries, add one grouped option "<family>-* (all)" (e.g. "gstack-* (all)") plus the
-     notable standalone ones (e.g. karpathy-guidelines, reverse-engineer-anything).
+     options = every skill ID under `~/.config/opencode/skills/` AND every pack under
+     `~/.config/opencode/skill-packs/`. Label pack entries `[pack]` so the user knows they
+     are opt-in and cost nothing until ticked. If a family exceeds ~8 entries, add one grouped
+     option "<family>-* (all)" (e.g. "gstack-* (all)") plus the notable standalone ones
+     (e.g. karpathy-guidelines, reverse-engineer-anything). Core skills are pre-selected;
+     pack skills are NOT pre-selected.
   3. header "Plugins" (always-on ones excluded)
      options = every remaining discovered plugin. In each option description state what it
      adds and what it costs: opencode-parser = ..., oh-my-embedded-v2 /
@@ -94,6 +100,9 @@ Use the `write` tool. Shape (omit a category's `deny *` when the user chose "all
     /* one allow per chosen skill id */
   ],
   "instructions": [".opencode/PROGRESS.md"],
+  "skills": [
+    "C:/Users/Arfan Mahmood/.config/opencode/skill-packs/gstack-qa"
+  ],
   "mcp": {
     /* ONLY servers that are not declared globally (e.g. kitesurf) */
   },
@@ -114,7 +123,10 @@ Hard rules:
 - Each `deny *` MUST precede its `allow` lines (within a file, last match wins).
 - If a grouped option such as `gstack-* (all)` was chosen, EXPAND it into one explicit
   `allow` statement per matching skill ID — do not rely on wildcards for `skill.use`.
-- NEVER add plugin/mcp/skill denies to the GLOBAL config — a project cannot lift a global deny.
+- NEVER add plugin/mcp/skill denies to the GLOBAL config - a project cannot lift a global deny.
+- `skills` lists ABSOLUTE paths to the picked pack directories (only pack picks; core skills
+  under `skills/` are already visible and need no path). OMIT the whole `skills` key when the
+  user picked no pack skills. One path per picked skill directory, never a parent folder.
 - Valid JSON only (no comments); prefer clean JSON for safety.
 
 STEP 4 — WRITE `.opencode/AVAILABLE.md` (capability inventory)
