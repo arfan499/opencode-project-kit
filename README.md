@@ -22,7 +22,7 @@ It also solves the other half of that problem — remembering where you were.
 | `/project_new` (alias `/new-project`) | Interviews you (project info → preset → exact plugins/MCP/skills → model), then writes `.opencode/opencode.jsonc`, `.opencode/AVAILABLE.md`, `.opencode/PROGRESS.md`, `.opencode/PROGRESS-FULL.md`, and `AGENTS.md`. |
 | `/project-add <name>` | Enable one plugin, MCP server, or skill in this project only. |
 | `/project-remove <name>` | Disable one again in this project only. |
-| `/project-mcp [on|off|list] <name>` | Borrow an MCP server for one task, then return it — no server is global. |
+| `/project-mcp [on\|off\|list] <name>` | Activate an MCP server on demand, deactivate when done. Every server is defined but dormant (`enabled: false`) — zero tokens until switched on. |
 | `/project-upgrade` | Pick up capabilities installed *after* the project was created (and detect dead ones). |
 | `/project-check [fix]` | Run typecheck → lint → test serially using the commands recorded in `PROGRESS.md`. |
 | `/project-doctor` | Read-only audit: policy order, dead allows, wiring, token cost, memory files. |
@@ -76,10 +76,9 @@ project/
 ├── AGENTS.md                    # rules for this project (committed)
 └── .opencode/
     ├── opencode.jsonc           # deny-by-default allow-list (committed)
-    ├── AVAILABLE.md             # inventory of the machine, [on]/[off] (committed)
+    ├── AVAILABLE.md             # inventory of the machine: [on]/[off]/[dormant] (committed)
     ├── PROGRESS.md              # briefing, <= 80 lines, AUTO-LOADED (committed)
-    ├── PROGRESS-FULL.md         # detailed history, never auto-loaded (committed)
-    └── history/                 # legacy
+    └── PROGRESS-FULL.md         # detailed history, never auto-loaded (committed)
 ```
 
 ### The two memory files
@@ -210,4 +209,5 @@ Then anyone can install it with `"plugins": ["opencode-project-kit"]`.
 
 ## License
 
-MIT
+MIT — see [LICENSE](./LICENSE). Use it, fork it, ship it, sell it; just keep the copyright
+notice and the license text, and understand it comes with no warranty.
