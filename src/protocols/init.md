@@ -91,10 +91,13 @@ STEP 4 — WIRE AUTO-LOAD
   - LOCAL ONLY: never edit `~/.config/opencode/` from inside a project; use /project-add and
     /project-remove.
   - NO SECRETS in tracked files — env vars only.
-  ## Capabilities — AUTOMATIC
+  ## Capabilities - AUTOMATIC
   - NEVER WORK BLIND OR DEGRADED: if a task would clearly go better with a capability that is
     not enabled here, say so in ONE line, name it, enable it with /project-add <name>, and
     continue. Announcing and enabling beats silently substituting a worse approach.
+  - MCP SERVERS ARE BORROWED, NOT INSTALLED. No MCP server is global, because an enabled one
+    costs tokens in every request. Need one? `/project-mcp on <name>`, do the work, then
+    `/project-mcp off <name>` before you report the task done.
   - `opencode-mem`, `opencode-swarm` and `@tarquinen/opencode-dcp` are always on and are not
     removed without explicit insistence from the user.
 

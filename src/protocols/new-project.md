@@ -56,8 +56,11 @@ CALL C — "Enable capabilities" (THREE questions in one call, each `multiple: t
   in the question text as "(opencode-mem, opencode-swarm and the context-compression plugin
   @tarquinen/opencode-dcp stay on in every project)".
   1. header "MCP servers"
-     options = every discovered global MCP server (e.g. rea) plus the project-local registry
-     entries (e.g. kitesurf), each with a one-line description of what it provides.
+     options = the project-local MCP registry entries (currently `rea` and `kitesurf`,
+     definitions in `commands/project-mcp.md`), each with a one-line description and its
+     approximate tool count. NO MCP server is global any more: each one injects its whole
+     tool schema into every request, so it is borrowed per task, not enabled for the
+     project's lifetime. Say this in the question text.
   2. header "Skills"
      options = every skill ID under `~/.config/opencode/skills/`. If a family exceeds ~8
      entries, add one grouped option "<family>-* (all)" (e.g. "gstack-* (all)") plus the
@@ -126,8 +129,10 @@ To enable one: `/project-add <name>`. To disable: `/project-remove <name>`.
 Always on, never removed: `opencode-mem`, `opencode-swarm`, `@tarquinen/opencode-dcp`.
 
 ## MCP servers
-- [on]  kitesurf — browser automation (project-local: definition lives in this project's `mcp`)
-- [off] rea — reverse engineering (global)
+- [on]  kitesurf - browser automation (~35 tools, project-local: this project's `mcp`)
+- [off] rea - reverse engineering (~255 tools, heavy; enable per task with `/project-mcp on rea`)
+
+MCP servers are billed per request while on. Turn them off when the task is done.
 
 ## Plugins
 - [on]  opencode-mem — cross-session memory (ALWAYS ON)
@@ -167,10 +172,15 @@ to enable)"; the user's always-on instructions; plus:
   each marked `[on]` or `[off]` for this project.
 - Never conclude "not available" without checking that file first.
 
-## Capabilities — AUTOMATIC
+## Capabilities - AUTOMATIC
 - NEVER WORK BLIND OR DEGRADED: if a task would clearly go better with a capability that is
   `[off]`, say so in ONE line, name it from `.opencode/AVAILABLE.md`, enable it with
   `/project-add <name>`, and continue. Announcing and enabling beats silently substituting.
+- MCP SERVERS ARE BORROWED, NOT INSTALLED. No MCP server is global: an enabled one injects
+  every tool schema it exposes into EVERY request, so it costs tokens whether used or not.
+  When a task needs one: say so in one line, `/project-mcp on <name>`, do the work, then
+  `/project-mcp off <name>` in the same turn you report the task done. Never leave one on
+  "just in case" and never enable one for a task that does not need it.
 - Enable only what you are about to use. When something stops being useful, offer
   `/project-remove <name>`.
 - `opencode-mem`, `opencode-swarm` and `@tarquinen/opencode-dcp` are always on and are not

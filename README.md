@@ -22,6 +22,7 @@ It also solves the other half of that problem — remembering where you were.
 | `/project_new` (alias `/new-project`) | Interviews you (project info → preset → exact plugins/MCP/skills → model), then writes `.opencode/opencode.jsonc`, `.opencode/AVAILABLE.md`, `.opencode/PROGRESS.md`, `.opencode/PROGRESS-FULL.md`, and `AGENTS.md`. |
 | `/project-add <name>` | Enable one plugin, MCP server, or skill in this project only. |
 | `/project-remove <name>` | Disable one again in this project only. |
+| `/project-mcp [on|off|list] <name>` | Borrow an MCP server for one task, then return it — no server is global. |
 | `/project-upgrade` | Pick up capabilities installed *after* the project was created (and detect dead ones). |
 | `/project-check [fix]` | Run typecheck → lint → test serially using the commands recorded in `PROGRESS.md`. |
 | `/project-doctor` | Read-only audit: policy order, dead allows, wiring, token cost, memory files. |
@@ -123,6 +124,15 @@ worse work. So the scaffold also writes `.opencode/AVAILABLE.md`: every plugin, 
 skill on the machine, marked `[on]` or `[off]`, and the rules tell the model to **read it before
 assuming something is missing** and to enable what it needs with `/project-add` instead of
 degrading quietly.
+
+### MCP servers are borrowed, not installed
+
+No MCP server is configured globally by this kit. An enabled server injects the full schema
+of every tool it exposes into **every** request, so it costs tokens whether you use it or not.
+`/project-mcp on <name>` writes the definition into the project config, does its job, and
+`/project-mcp off <name>` removes it again — schema, `mcp.use` allow, and any companion
+`instructions` path. The registry of known definitions lives in the protocol itself, so a
+disabled server costs zero.
 
 **Always on** in every project (not a choice, and `/project-remove` refuses them):
 `opencode-mem` (cross-session memory), `opencode-swarm` (agents/orchestration),

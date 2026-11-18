@@ -19,29 +19,17 @@ run this, and continue. Never silently work around a missing capability.
    - plugin resource: absolute path as written (forward slashes) or unversioned npm name
    - mcp resource: server name
    - skill resource: skill id
-3b. MCP SERVERS ARE DEFINED, NOT JUST ALLOWED. A policy `allow` only un-blocks a server that
-   some config already declares. If the requested server is not in global `mcp`, write its
-   definition into the PROJECT config's `mcp` block as well:
-
-   ```jsonc
-   "mcp": {
-     "<name>": { "type": "local", "command": [ ... ], "timeout": 60000, "enabled": true }
-   }
-   ```
-
-   Known definitions (deliberately NOT global — keep them project-local):
-   - `kitesurf` — browser automation:
-     `["C:\\Program Files\\nodejs\\node.exe",
-       "C:\\Users\\Arfan Mahmood\\AppData\\Roaming\\npm\\node_modules\\chrome-devtools-mcp\\out\\Default\\gen\\src\\bin\\chrome-devtools-mcp.js",
-       "--wsEndpoint=wss://kitesurf.dev/devtools/browser",
-       "--category-experimental-webmcp",
-       "--no-page-id-routing",
-       "--workspace=/",
-       "--no-usage-statistics"]`, timeout 60000.
-     Also add `"C:\\Users\\Arfan Mahmood\\.config\\opencode\\kitesurf.md"` to the project's
-     `instructions` array (that file is the usage guide; it is not global any more).
-
-   If a server name is unknown and has no definition anywhere, say so and ask for its command.
+3b. MCP SERVERS ARE DEFINED, NOT JUST ALLOWED — and they are borrowed, not installed.
+   No MCP server is global any more: an enabled server injects its whole tool schema into
+   every request, so it costs tokens in every project whether used or not.
+   For MCP requests, do not hand-write a definition here: run `/project-mcp on <name>`
+   instead. That command owns the registry of known definitions (`rea`, `kitesurf`, and
+   anything appended there), writes the definition into the PROJECT config's `mcp` block,
+   adds the `mcp.use` allow, and adds any companion `instructions` path.
+   If the name is not in that registry, `/project-mcp` will say so — ask the user for the
+   server's command and append it to the registry there.
+   IMPORTANT: an MCP is temporary. When the task that needed it is finished, run
+   `/project-mcp off <name>` so the schemas stop being sent.
 4. Keep `.opencode/AVAILABLE.md` in sync: flip that capability's line to `[on]`. If the file is
    missing, create it from `new-project.md` STEP 4.
 5. Save the file. Confirm the change is live (hot reload), state exactly what was enabled, and

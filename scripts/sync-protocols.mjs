@@ -35,6 +35,7 @@ const KIT_COMMANDS = [
   "project-upgrade",
   "project-check",
   "project-doctor",
+  "project-mcp",
   "init",
   "progress",
   "handoff",
