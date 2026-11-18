@@ -2,9 +2,9 @@
  * opencode-project-kit — lean, opt-in per-project scaffolding for OpenCode V2.
  *
  * Registers the project-kit slash commands (/project_new, /project-add, /project-remove,
- * /init, /progress, /handoff, /resume, /project-check, /project-doctor, /project-upgrade)
- * from the bundled markdown protocols, and injects a short "how to keep the project
- * memory alive" rule set for projects that have already been scaffolded.
+ * /project-mcp, /init, /progress, /handoff, /resume, /project-check, /project-doctor,
+ * /project-upgrade) from the bundled markdown protocols, and injects a short "how to keep
+ * the project memory alive" rule set for projects that have already been scaffolded.
  *
  * V2 plugin API only (`Plugin.define`). Not compatible with V1 plugin signatures.
  */

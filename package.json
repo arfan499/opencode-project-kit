@@ -1,0 +1,40 @@
+{
+  "name": "opencode-project-kit",
+  "version": "0.1.0",
+  "description": "Lean, opt-in per-project scaffolding for OpenCode V2: /project_new, /project-add, /project-remove, /project-mcp, and an automatic two-file project memory that survives model switches.",
+  "scripts": {
+    "sync": "node scripts/sync-protocols.mjs",
+    "check": "node scripts/sync-protocols.mjs --check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arfan499/opencode-project-kit.git"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "project-scaffold",
+    "agents",
+    "memory",
+    "context"
+  ],
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/arfan499/opencode-project-kit/issues"
+  },
+  "homepage": "https://github.com/arfan499/opencode-project-kit#readme",
+  "license": "MIT",
+  "author": "Arfan Mahmood",
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": "./src/index.ts",
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@opencode/plugin": "latest"
+  }
+}
