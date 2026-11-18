@@ -33,8 +33,5 @@
     "src",
     "README.md",
     "LICENSE"
-  ],
-  "dependencies": {
-    "@opencode/plugin": "latest"
-  }
+  ]
 }

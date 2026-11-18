@@ -34,6 +34,9 @@ It also solves the other half of that problem — remembering where you were.
 Commands are markdown protocols. The plugin registers each bundled file as a slash command and
 sends its body to the model — so a command is just a prompt you no longer have to retype.
 
+The plugin has **no runtime dependencies**: OpenCode provides `@opencode/plugin` at load time,
+so there is nothing to install and `npm audit` reports zero vulnerabilities.
+
 ---
 
 ## Install
