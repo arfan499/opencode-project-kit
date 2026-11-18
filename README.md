@@ -125,14 +125,17 @@ skill on the machine, marked `[on]` or `[off]`, and the rules tell the model to 
 assuming something is missing** and to enable what it needs with `/project-add` instead of
 degrading quietly.
 
-### MCP servers are borrowed, not installed
+### MCP servers are installed but dormant
 
-No MCP server is configured globally by this kit. An enabled server injects the full schema
-of every tool it exposes into **every** request, so it costs tokens whether you use it or not.
-`/project-mcp on <name>` writes the definition into the project config, does its job, and
-`/project-mcp off <name>` removes it again — schema, `mcp.use` allow, and any companion
-`instructions` path. The registry of known definitions lives in the protocol itself, so a
-disabled server costs zero.
+Every MCP server this kit knows about is defined in the global config with `"enabled": false`.
+It is listed and discoverable, and it costs **zero** tokens. That matters because an enabled
+server injects the full schema of every tool it exposes into **every** request —
+`rea` alone ships ~255 tools.
+
+`/project-mcp on <name>` activates one for the current project (definition + `mcp.use` allow +
+any companion `instructions` path) and `/project-mcp off <name>` deactivates it again. The
+dormant global definition stays behind as the catalogue, so a disabled server is always one
+command away. `/project-mcp on <name> --global` flips it everywhere instead, and warns.
 
 **Always on** in every project (not a choice, and `/project-remove` refuses them):
 `opencode-mem` (cross-session memory), `opencode-swarm` (agents/orchestration),
