@@ -230,7 +230,10 @@ global capabilities), `/project-add`, `/project-remove`.
 
 ALWAYS-ON (not a preset; written into every project; edit here to change the baseline)
 - plugins: opencode-mem (cross-session memory), opencode-swarm (agents / orchestration),
-  @tarquinen/opencode-dcp (context compression — compacts long sessions automatically)
+  @tarquinen/opencode-dcp (context compression - compacts long sessions automatically)
+- MCP servers are never part of the baseline: every MCP installed in future is added to the
+  global config as a DORMANT definition (`"enabled": false`) plus one entry in the registry in
+  `commands/project-mcp.md`, and is activated per task with `/project-mcp on <name>`.
 
 PERSISTENT PRESETS (edit this table to change presets; keys are offered in CALL B)
 - web       | Web / frontend / full-stack (browser + QA + design + ship)

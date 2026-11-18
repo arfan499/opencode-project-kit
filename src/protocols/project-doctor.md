@@ -21,6 +21,10 @@ READ-ONLY audit. Change nothing unless the user asks after seeing the report.
    - `skill.use` -> directory must exist under `~/.config/opencode/skills/`
    Anything unmatched is a DEAD ALLOW: the capability is denied with no error anywhere. Report as
    "typo suspect" with the closest real name if there is one.
+4b. GLOBAL MCP MUST STAY DORMANT: every entry under `mcp` in the GLOBAL config must carry
+   `"enabled": false`. A globally enabled MCP bills every project on every request — report it
+   as the top defect and offer `/project-mcp off <name> --global`. Also flag a `mcp.use` allow
+   here for a server that is dormant in every config: it un-blocks nothing (`dead allow`).
 5. WIRING: `.opencode/PROGRESS.md` must be listed in `instructions` AND exist on disk. Report the
    `updated:` age in days (a stale file means memory is lying to every new session).
    `.opencode/PROGRESS-FULL.md` must exist, must NOT be in `instructions` (it is the zero-token

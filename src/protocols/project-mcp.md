@@ -135,10 +135,19 @@ when activating per project; keep the global copies in sync if a command changes
 
 Companion instructions: `C:\Users\Arfan Mahmood\.config\opencode\kitesurf.md`
 
-### Adding a new server
+### Adding a new server — MANDATORY for every future MCP
 
-Append it here (command array, approximate tool count, companion instructions if any)
-**and** add it to the global config with `"enabled": false`, so it is discoverable but free.
+Any time an MCP server is installed or added to this machine, do all four, in this order:
+
+1. Add its definition to the **global** config `mcp` block with `"enabled": false`.
+2. Append it to this registry (command array verbatim, approximate tool count, companion
+   instructions file if it needs one).
+3. List it in every project's `.opencode/AVAILABLE.md` as `[dormant]` with its tool count.
+4. Never make it part of a project's permanent allows — it is activated per task with
+   `/project-mcp on <name>` and deactivated with `off`.
+
+An MCP that is enabled globally is a defect: it bills every project on every request.
+`/project-doctor` reports it, `/project-upgrade` offers to switch it off.
 
 ---
 

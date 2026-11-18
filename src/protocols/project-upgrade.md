@@ -9,6 +9,11 @@ reconciles ONE project with it. Read-only until the user picks.
 1. Re-run DISCOVER from `~/.config/opencode/commands/new-project.md` STEP 1: union of global
    plugins (policy resource = exact path with forward slashes for directory plugins, unversioned
    npm name for npm plugins), MCP server names, skill IDs from `~/.config/opencode/skills/`.
+1b. MCP HYGIENE — enforce the dormancy rule while you are here: every MCP entry in the GLOBAL
+   config must be `"enabled": false` (dormant catalogue, zero tokens). If any is enabled
+   globally, say so plainly and offer `/project-mcp off <name> --global`. Never enable an MCP
+   as part of an upgrade: MCPs are activated per task with `/project-mcp on <name>`, never
+   added to a project's long-lived allows.
 2. Read this project's `policies`. Compute two sets:
    - ALWAYS-ON = `opencode-mem`, `opencode-swarm`, `@tarquinen/opencode-dcp`: never offered as
      NEW, never proposed for removal. Report them as one fixed line, and if any lacks its `allow`
